@@ -11,7 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     setFixedSize(650, 950);     // фиксируем окно, чтобы было проще с координатами
-
+    timerPaint=new QTimer;
+    connect(timerPaint,SIGNAL(timeout()),this,SLOT(Update()));
+    timerPaint->setInterval(0.00000000005);
+    timerPaint->start();
     timberman = new Timberman(980);
     tree=new Tree(650,980);
     repaint();
@@ -25,20 +28,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-    switch(event->key()){
-        case (Qt::Key_Left):{
-            cut_left();
-            break;
+    if (!tree->getRybTree())
+    {
+        switch(event->key()){
+            case (Qt::Key_Left):{
+                cut_left();
+                break;
+            }
+            case (Qt::Key_Right):{
+                cut_right();
+                break;
+            }
         }
-        case (Qt::Key_Right):{
-            cut_right();
-            break;
-        }
+        ProvGameOver();
+        tree->deleteTrunk();
+        ProvGameOver();
+        repaint();
     }
-    ProvGameOver();
-    tree->deleteTrunk();
-    ProvGameOver();
-    repaint();
 }
 
 void MainWindow::cut_left()
@@ -109,15 +115,27 @@ void MainWindow::ProvGameOver()
         case 1:
         {
             if (LeftORRight)
+            {
                 qDebug("game over  %d",++gameOver);
+                timberman->setIm(QPixmap(":Rip/Images/rip_lev.png"));
+            }
             break;
         }
         case 2:
         {
             if (!LeftORRight)
+            {
                 qDebug("game over  %d",++gameOver);
+                timberman->setIm(QPixmap(":Rip/Images/rip_prav.png"));
+            }
             break;
         }
     }
+}
+
+void MainWindow::Update()
+{
+    tree->DownTree();
+    repaint();
 }
 

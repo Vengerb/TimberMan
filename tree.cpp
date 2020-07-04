@@ -1,6 +1,7 @@
 #include "tree.h"
 #include <random>
 #include <ctime>
+#include<QThread>
 
 //создание дерева
 Tree::Tree(int with, int heigh)
@@ -66,13 +67,16 @@ void Tree::picture(QPainter *p)
 //удаление нижнего ствола и переприсваивание последующих стволов
 void Tree::deleteTrunk()
 {
+    zapY=tr[0].y;
     for (int i=0;i<NumberTrunk-1;i++)
     {
         tr[i].x=tr[i+1].x;
+        tr[i].y-=50;
         tr[i].img=tr[i+1].img;
         tr[i].sizeWith=tr[i+1].sizeWith;
         tr[i].typeTree=tr[i+1].typeTree;
     }
+    RybTree=true;
     int ind=NumberTrunk-1;
     tr[ind].typeTree=rand()%3;
         if (tr[ind-1].typeTree!=tr[ind].typeTree&&tr[ind-1].typeTree!=0)
@@ -105,4 +109,23 @@ void Tree::deleteTrunk()
 
     }
     tr[ind].y=tr[ind-1].y-tr[ind].sizeHeigh;
+}
+
+void Tree::DownTree()
+{
+    if (RybTree)
+    {
+        int summ=0;
+        if (zapY!=tr[0].y)
+            {
+                for (int i=0;i<NumberTrunk;i++)
+                    {
+                        tr[i].y+=20;
+                        if (tr[0].y>zapY) summ=tr[0].y-zapY;
+                        tr[i].y-=summ;
+                    }
+            }
+        else RybTree=false;
+    }
+
 }

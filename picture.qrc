@@ -4,15 +4,11 @@
         <file>Images/derevo1_lev.png</file>
         <file>Images/derevo1_prav.png</file>
     </qresource>
-    <qresource prefix="/Timber">
-        <file>Images/drovosek1_lev.png</file>
-        <file>Images/drovosek1_prav.png</file>
-        <file>Images/drovosek2_lev.png</file>
-        <file>Images/drovosek2_prav.png</file>
-        <file>Images/drovosek3_lev.png</file>
-        <file>Images/drovosek3_prav (1).png</file>
-    </qresource>
     <qresource prefix="/fon">
         <file>Images/fon.png</file>
+    </qresource>
+    <qresource prefix="/Rip">
+        <file>Images/rip_lev.png</file>
+        <file>Images/rip_prav.png</file>
     </qresource>
 </RCC>

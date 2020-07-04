@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <timberman.h>
 #include <tree.h>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,5 +31,9 @@ private:
     bool LeftORRight=true;
     int gameOver=0;
     const int interval=20;
+    QTimer *timerPaint=nullptr;
+
+private slots:
+    void Update();
 };
 #endif // MAINWINDOW_H

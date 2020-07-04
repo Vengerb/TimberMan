@@ -20,6 +20,11 @@ public:
         return tr[i].x;
     }
     void deleteTrunk(); //Удаление ствола дерева
+    void DownTree(); //cпуск дерева
+    bool getRybTree()
+    {
+        return RybTree;
+    }
 
 private:
     struct tree //состовляющее ствола
@@ -37,6 +42,8 @@ private:
     int sizeWith1=140; // ширина ствола 0 типа
     int sizeWith2=280; // ширина стволов 2 и 1 типов
     int NumberTrunk; //количество состовляющих стволов
+    int zapY;
+    bool RybTree=false;//срублено или нет
 };
 
 #endif // TREE_H
