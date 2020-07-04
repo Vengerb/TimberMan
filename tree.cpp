@@ -113,19 +113,19 @@ void Tree::deleteTrunk()
 
 void Tree::DownTree()
 {
-    if (RybTree)
+    if (RybTree)//если дерево срублено
     {
         int summ=0;
         if (zapY!=tr[0].y)
             {
                 for (int i=0;i<NumberTrunk;i++)
                     {
-                        tr[i].y+=20;
-                        if (tr[0].y>zapY) summ=tr[0].y-zapY;
+                        tr[i].y+=20;//опустить вниз на 20
+                        if (tr[0].y>zapY) summ=tr[0].y-zapY; //если преувеличивает изначального значения то поднять повыше на summ
                         tr[i].y-=summ;
                     }
             }
-        else RybTree=false;
+        else RybTree=false; //снова не срубленно
     }
 
 }
