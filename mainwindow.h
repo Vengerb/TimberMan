@@ -30,7 +30,7 @@ private:
     Tree *tree=nullptr;
     bool LeftORRight=true;
     int gameOver=0;
-    const int interval=20;
+    const int interval=25;
     QTimer *timerPaint=nullptr;
 
 private slots:
