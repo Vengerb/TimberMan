@@ -54,7 +54,7 @@ void MainWindow::cut_left()
 //    QThread::msleep(100) здесь и далее - задержка в 100 мсек, чтобы действие было заметно
 //    (можно еще уменьшить)
     timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
-    timberman->setX(timberman->getIm().width()-20);
+    timberman->setX(timberman->getIm().width()-indentTree);
     repaint();
     QThread::msleep(interval);
 
@@ -80,7 +80,7 @@ void MainWindow::cut_right()
 //    перемещаемся вправо
 //    вычитаем 3 ширины картики(т.к пока она 110*110) т.е -330
     timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
-    timberman->setX(MainWindow::size().width() - 3*timberman->getIm().width()+20);
+    timberman->setX(MainWindow::size().width() - 3*timberman->getIm().width()+indentTree);
     repaint();
     QThread::msleep(interval);
 

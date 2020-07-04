@@ -32,6 +32,7 @@ private:
     int gameOver=0;
     const int interval=25;
     QTimer *timerPaint=nullptr;
+    int indentTree=20; //отступ от дерева
 
 private slots:
     void Update();
