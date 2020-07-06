@@ -58,16 +58,29 @@ Tree::Tree(int with, int heigh)
 //отрисовка дерева состоящего из стволов
 void Tree::picture(QPainter *p)
 {
+    QPainter *p0=p;
     for (int i=0;i<NumberTrunk;i++)
     {
         p->drawImage(QRect(tr[i].x-tr[i].sizeWith/2,tr[i].y-tr[i].sizeHeigh/2,tr[i].sizeWith,tr[i].sizeHeigh),tr[i].img);
+        if (i<Qtr.length())
+        {
+            p->translate(Qtr[i].x-Qtr[i].sizeWith/2,Qtr[i].y-Qtr[i].sizeHeigh/2);
+            p->rotate(Qtr[i].Ygol);
+            p->drawImage(QRect(0,0,Qtr[i].sizeWith,Qtr[i].sizeHeigh),Qtr[i].img);
+            p->rotate(-Qtr[i].Ygol);
+            p->translate(-(Qtr[i].x-Qtr[i].sizeWith/2),-(Qtr[i].y-Qtr[i].sizeHeigh/2));
+            if (Qtr[i].Ygol>60)Qtr[i].Ygol=0; else Qtr[i].Ygol+=10;
+        }
     }
+    p=p0;
 }
 
 //удаление нижнего ствола и переприсваивание последующих стволов
-void Tree::deleteTrunk()
+void Tree::deleteTrunk(bool LeftRight)
 {
     zapY=tr[0].y;
+    tr[0].LeftRight=LeftRight;
+    Qtr.append(tr[0]);
     for (int i=0;i<NumberTrunk-1;i++)
     {
         tr[i].x=tr[i+1].x;
@@ -126,6 +139,14 @@ void Tree::DownTree()
                     }
             }
         else RybTree=false; //снова не срубленно
+    }
+    int i=0;
+    while (i<Qtr.length())
+    {
+        if (!Qtr[i].LeftRight) Qtr[i].x-=20; else Qtr[i].x+=30;
+        Qtr[i].y=int (-(Qtr[i].x)*(Qtr[i].x)*20/(400*400)+20)+750;
+        if (Qtr[i].x>800 || Qtr[i].x<0) Qtr.removeAt(i);
+        else i++;
     }
 
 }

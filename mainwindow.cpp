@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(650, 950);     // фиксируем окно, чтобы было проще с координатами
     timerPaint=new QTimer;
     connect(timerPaint,SIGNAL(timeout()),this,SLOT(Update()));
-    timerPaint->setInterval(0.00000000005);
+    timerPaint->setInterval(20);
     timerPaint->start();
     timberman = new Timberman(980);
     tree=new Tree(650,980);
@@ -32,72 +32,22 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         switch(event->key()){
             case (Qt::Key_Left):{
-                cut_left();
+                LeftORRight=true;
+                ProvGameOver();
+                tree->deleteTrunk(LeftORRight);
+                ProvGameOver();
                 break;
             }
             case (Qt::Key_Right):{
-                cut_right();
+                LeftORRight=false;
+                ProvGameOver();
+                tree->deleteTrunk(LeftORRight);
+                ProvGameOver();
                 break;
             }
         }
-        ProvGameOver();
-        tree->deleteTrunk();
-        ProvGameOver();
         repaint();
     }
-}
-
-void MainWindow::cut_left()
-{
-    LeftORRight=true;
-//    перемещаемся влево
-//    QThread::msleep(100) здесь и далее - задержка в 100 мсек, чтобы действие было заметно
-//    (можно еще уменьшить)
-    timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
-    timberman->setX(timberman->getIm().width()-indentTree);
-    repaint();
-    QThread::msleep(interval);
-
-//    замахиваемся
-    timberman->setIm(QPixmap(":/images/drovosek2_lev.png"));
-    repaint();
-    QThread::msleep(interval);
-
-//    рубим
-    timberman->setIm(QPixmap(":/images/drovosek3_lev.png"));
-    repaint();
-    QThread::msleep(interval);
-
-//    исходное состояние
-    timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
-    repaint();
-
-}
-
-void MainWindow::cut_right()
-{
-    LeftORRight=false;
-//    перемещаемся вправо
-//    вычитаем 3 ширины картики(т.к пока она 110*110) т.е -330
-    timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
-    timberman->setX(MainWindow::size().width() - 3*timberman->getIm().width()+indentTree);
-    repaint();
-    QThread::msleep(interval);
-
-//    замахиваемся
-    timberman->setIm(QPixmap(":/images/drovosek2_prav.png"));
-    repaint();
-    QThread::msleep(interval);
-
-//    рубим
-    timberman->setIm(QPixmap(":/images/drovosek3_prav.png"));
-    repaint();
-    QThread::msleep(interval);
-
-//    исходное положение
-    timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
-    repaint();
-
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -118,6 +68,7 @@ void MainWindow::ProvGameOver()
             {
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_lev.png"));
+                timerPaint->stop();
             }
             break;
         }
@@ -127,6 +78,7 @@ void MainWindow::ProvGameOver()
             {
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_prav.png"));
+                timerPaint->stop();
             }
             break;
         }
@@ -135,6 +87,80 @@ void MainWindow::ProvGameOver()
 
 void MainWindow::Update()
 {
+    if (tree->getRybTree())
+    {
+        if (LeftORRight)
+        {
+            switch(timberman->getSost())
+            {
+                //    перемещаемся влево
+                case 0:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
+                    timberman->setX(timberman->getIm().width()-indentTree);
+                    repaint();
+                    break;
+                }
+                //    замахиваемся
+                case 1:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek2_lev.png"));
+                    repaint();
+                    break;
+                }
+                //    рубим
+                case 2:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek3_lev.png"));
+                    repaint();
+                    break;
+                }
+                //    исходное положение
+                case 3:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
+                    repaint();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            switch(timberman->getSost())
+            {
+                //    перемещаемся вправо
+                case 0:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
+                    timberman->setX(650 - 3*timberman->getIm().width()+indentTree);
+                    repaint();
+                    break;
+                }
+                 //    замахиваемся
+                case 1:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek2_prav.png"));
+                    repaint();
+                    break;
+                }
+                //    рубим
+                case 2:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek3_prav.png"));
+                    repaint();
+                    break;
+                }
+                //    исходное положение
+                case 3:
+                {
+                    timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
+                    repaint();
+                    break;
+                }
+            }
+        }
+        timberman->UPsost();
+    }
     tree->DownTree();
     repaint();
 }

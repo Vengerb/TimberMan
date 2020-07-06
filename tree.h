@@ -19,7 +19,7 @@ public:
     {
         return tr[i].x;
     }
-    void deleteTrunk(); //Удаление ствола дерева
+    void deleteTrunk(bool LeftRight); //Удаление ствола дерева
     void DownTree(); //cпуск дерева
     bool getRybTree()
     {
@@ -35,10 +35,13 @@ private:
         int sizeWith; //размер ствола по ширине
         int sizeHeigh=140; //размер ствола по высоте
         int typeTree; //тип ствола дерева (0-центральное, 1-ветка слева, 2-ветка справа)
+        int Ygol=0;
+        bool LeftRight=false;//при каком направлении срублено
     };
     int startX; //начальное положение по координате Х
     int indentH=50; //отступ по координате У
     QList <tree> tr; //само дерево
+    QList <tree> Qtr; //очередь на вылет
     int sizeWith1=140; // ширина ствола 0 типа
     int sizeWith2=280; // ширина стволов 2 и 1 типов
     int NumberTrunk; //количество состовляющих стволов

@@ -16,6 +16,10 @@ public:
 
     int getX() const;
 
+    void UPsost();
+
+    int getSost();
+
 private:
     QPixmap im;         //изображение в png
                         // не использую QImage т.к оно похоже предназанчено для jpg
@@ -26,8 +30,9 @@ private:
                        // можно уменьшить - тогда в дальнейшем будет видно дерево на меньшую высоту
     int SizeWith=220;
     int SizeHeight=220;
-    int indentH=120;
+    int indentH=110;
     int indentTree=20;
+    int sost=0;//нужно для анимации
 };
 
 #endif // TIMBERMAN_H

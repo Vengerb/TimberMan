@@ -19,8 +19,6 @@ public:
     ~MainWindow();
 
     void keyPressEvent(QKeyEvent *event);
-    void cut_left();
-    void cut_right();
     void paintEvent(QPaintEvent *event);
     void ProvGameOver();
 

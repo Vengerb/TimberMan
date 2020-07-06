@@ -36,3 +36,14 @@ int Timberman::getX() const
 {
     return x;
 }
+
+void Timberman::UPsost()
+{
+    sost++;
+    if (sost>3) sost=0;
+}
+
+int Timberman::getSost()
+{
+    return sost;
+}
