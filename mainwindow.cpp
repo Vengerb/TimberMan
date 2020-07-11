@@ -34,6 +34,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         switch(event->key()){
             case (Qt::Key_Left):{
                 LeftORRight=true;
+                score++;
                 if (timeRemaining<650-650/2)
                      timeRemaining += 7;
                 else {
@@ -46,6 +47,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             }
             case (Qt::Key_Right):{
                 LeftORRight=false;
+                score++;
                 if (timeRemaining<650-650/2)
                     timeRemaining += 7;
                 else {
@@ -92,7 +94,7 @@ void MainWindow::ProvGameOver()
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_lev.png"));
                 timerPaint->stop();
-                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score));
+                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score-1));
                 exit(0);
             }
             break;
@@ -104,7 +106,7 @@ void MainWindow::ProvGameOver()
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_prav.png"));
                 timerPaint->stop();
-                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score));
+                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score-1));
                 exit(0);
             }
             break;
