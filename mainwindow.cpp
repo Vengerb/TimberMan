@@ -3,6 +3,7 @@
 #include <QKeyEvent>
 #include <QPainter>
 #include <QThread>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -69,6 +70,8 @@ void MainWindow::ProvGameOver()
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_lev.png"));
                 timerPaint->stop();
+                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score));
+                exit(0);
             }
             break;
         }
@@ -79,6 +82,8 @@ void MainWindow::ProvGameOver()
                 qDebug("game over  %d",++gameOver);
                 timberman->setIm(QPixmap(":Rip/Images/rip_prav.png"));
                 timerPaint->stop();
+                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score));
+                exit(0);
             }
             break;
         }
@@ -97,7 +102,7 @@ void MainWindow::Update()
                 case 0:
                 {
                     timberman->setIm(QPixmap(":/images/drovosek1_lev.png"));
-                    timberman->setX(timberman->getIm().width()-indentTree);
+                    timberman->setX(timberman->getIm().width()-2*indentTree);
                     repaint();
                     break;
                 }
@@ -132,7 +137,7 @@ void MainWindow::Update()
                 case 0:
                 {
                     timberman->setIm(QPixmap(":/images/drovosek1_prav.png"));
-                    timberman->setX(650 - 3*timberman->getIm().width()+indentTree);
+                    timberman->setX(650 - 3*timberman->getIm().width()+2*indentTree);
                     repaint();
                     break;
                 }
