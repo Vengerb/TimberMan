@@ -34,6 +34,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         switch(event->key()){
             case (Qt::Key_Left):{
                 LeftORRight=true;
+                if (timeRemaining<650-650/2)
+                     timeRemaining += 7;
+                else {
+                   timeRemaining=650-650/2;
+                }
                 ProvGameOver();
                 tree->deleteTrunk(LeftORRight);
                 ProvGameOver();
@@ -41,6 +46,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
             }
             case (Qt::Key_Right):{
                 LeftORRight=false;
+                if (timeRemaining<650-650/2)
+                    timeRemaining += 7;
+                else {
+                     timeRemaining=650-650/2;
+                }
                 ProvGameOver();
                 tree->deleteTrunk(LeftORRight);
                 ProvGameOver();
@@ -57,6 +67,18 @@ void MainWindow::paintEvent(QPaintEvent *event)
      p.drawPixmap(QRect(0,0,650,950),QPixmap(":/fon/Images/fon.png"));
      tree->picture(&p);
      timberman->draw(&p);
+
+     p.setBrush(QColor(255,0,0));
+               p.drawRect(QRect(650/4,50,timeRemaining,20));
+               p.brushOrigin();
+
+          p.setFont(QFont(f_black));
+          p.setPen(QColor(0,0,0));
+          p.drawText(270,300,110,110,Qt::AlignCenter, QString::number(score));
+
+          p.setFont(QFont(f_white));
+          p.setPen(QColor(255,255,255));
+          p.drawText(270,300,110,110,Qt::AlignCenter, QString::number(score));
 }
 
 void MainWindow::ProvGameOver()
@@ -167,6 +189,13 @@ void MainWindow::Update()
         timberman->UPsost();
     }
     tree->DownTree();
+    timeRemaining-=1;
+            if (timeRemaining<0)
+            {
+                timerPaint->stop();
+                QMessageBox::information(this, "GAME OVER !!!",  QString("score = %1").arg(score));
+                exit(0);
+            }
     repaint();
 }
 
